@@ -1,0 +1,30 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();//value,count
+        List<Integer>[] freq = new List[nums.length+1];
+        for(int i = 0; i < freq.length; i++){
+            freq[i] = new ArrayList<>();
+        }
+        for(int i = 0; i < nums.length; i++){
+            map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
+        }
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()){
+            freq[entry.getValue()].add(entry.getKey());
+        }
+        int[] ans = new int[k];
+        int j = freq.length;
+        int l = 0;
+        while(k > 0){
+            j--;
+            while(freq[j].size()==0){
+                j--;
+            }
+            for(int i = 0; i < freq[j].size(); i++){
+                ans[l] = freq[j].get(i);
+                l++;
+                k--;
+            }
+        }
+        return ans;
+    }
+}
